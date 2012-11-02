@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="style.css" type="text/css"?>
+
+<prefwindow 
+     id="permalinks-main-pref-window"
+	 title="Shorten URL with perm.ly Preferences"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	 width="450" 
+	 height="450">
+
+	<script type="application/x-javascript" src="chrome://shortenurlpermly/content/options.js" />
+	 
+		<prefpane id="permalinks-main-pref-pane" label="perm.ly API Preferences" > 
+			<preferences>
+				<preference id="permalinks.permly.apikey" name="permalinks.permly.apikey" type="string"/>
+				<preference id="permalinks.permly.refresh-timeout" name="permalinks.permly.refresh-timeout" type="string"/>
+				<preference id="permalinks.permly.custom-urls" name="permalinks.permly.custom-urls" type="string"/>
+			</preferences>
+		<image id="options-header" src='chrome://shortenurlpermly/content/option_header.png' width="425" height="64" />
+		<vbox>
+				<groupbox>
+					<caption label="API Settings"/>
+					<grid>
+						<columns>
+							<column />
+							<column />
+						</columns>
+						<rows>
+							<row align ="center" colspan="2">
+								<label  value="perm.ly API Key is required for shortening URLs." />
+							</row>
+							<row align ="center">
+									<label  value="Perm.ly API-Key : "  class="title" />
+									<textbox id="permly-apikey" label="" class="title" preference="permalinks.permly.apikey" />
+							</row>
+							<row align ="center">
+									<label  value="Test API-Key : "  class="title" />
+									<button id="permly-validate" class="title" label="Test" oncommand="bPermalinksUrlOptions.checkApiKey( document );"/>
+							</row>
+							<row align ="center">
+									<label  value="View API-Key : "  class="title" />
+									<button id="permly-view-api-key" class="title" label="Get your API Key" oncommand="bPermalinksUrlOptions.showApiKey( document );"/>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>	
+				<groupbox>
+					<caption label="URL Preview Settings"/>
+					<grid>
+						<columns>
+							<column />
+							<column />
+						</columns>
+						<rows>
+							<row align ="center">
+									<label  value="Preview Time-out (seconds) : "  class="title" />
+									<textbox id="permly-preview-timeout" label="" class="title" preference="permalinks.permly.refresh-timeout" />
+							</row>
+							<row align ="center">
+									<label  value="Permly URLs (comma separated) : "  class="title" />
+									<textbox id="permly-custom-urls" label="" class="title" preference="permalinks.permly.custom-urls" />
+							</row>
+						</rows>
+					</grid>
+				</groupbox>	
+				<hbox>
+					<label  id="contact_email_label" value="Feedback:" /><label id="contact_email" value="hello@77yards.com" />
+				</hbox>
+			</vbox>
+		</prefpane>
+</prefwindow>

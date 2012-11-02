@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://shortenurlpermly/content/permly.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://helloworld/locale/overlay.dtd">
+<overlay id="Permalinks URL"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://shortenurlpermly/content/overlay.js"/>
+
+  <popup id="contentAreaContextMenu">
+		<menuseparator/>
+		<menuitem id="permalinks-url-context-menu" insertafter="Stop" label="perm.ly URL" oncommand="PermalinksURL.saveLink( PermalinksURL.copyToClipboard );" accesskey="p" image="chrome://shortenurlpermly/content/permly.png" class="menuitem-iconic"/>
+	</popup>
+  
+	<!-- Firefox -->
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbarbutton id="permalinks-button-1"/>
+	</toolbarpalette>
+	
+	<!-- button details -->
+	<toolbarbutton id="permalinks-button-1"
+	  label="perm.ly Link"
+	  tooltiptext="Shorten URL and copy it to clipboard"
+	  oncommand="PermalinksURL.saveLink( PermalinksURL.copyToClipboard );"
+	  class="toolbarbutton-1 chromeclass-toolbar-additional"
+	  />
+  
+</overlay>

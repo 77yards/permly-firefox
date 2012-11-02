@@ -1,0 +1,22 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#permalinks-button-1,
+#wrapper-custom-button-1
+  {list-style-image: url("chrome://shortenurlpermly/content/permly.png");}
+
+.text-label
+  { font-weight:bold; }
+
+.action-url-1
+  { -moz-appearance: none; background-color:#dddddd; color:#4f4f4f }
+  
+.short-url-1
+  { -moz-appearance: none; background-color:#dddddd; color:#4f4f4f; font-weight:bold; }
+  
+.action-url-2
+  { -moz-appearance: none; background-color:#dddddd; color:#4f4f4f }
+  
+.short-url-2
+  { -moz-appearance: none; background-color:#dddddd; color:#4f4f4f; font-weight:bold; }
+
+

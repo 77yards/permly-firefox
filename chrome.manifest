@@ -1,0 +1,8 @@
+content shortenurlpermly content/
+style chrome://global/content/customizeToolbar.xul chrome://shortenurlpermly/content/permly.css
+
+overlay	chrome://browser/content/browser.xul chrome://shortenurlpermly/content/overlay.xul 
+
+skin	shortenurlpermly	classic	skin/
+locale	shortenurlpermly	en-US	locale/en-US/
+
