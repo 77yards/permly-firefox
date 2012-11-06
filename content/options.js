@@ -14,9 +14,9 @@ var bPermalinksUrlOptions =
 				return;
 			}
 						
-			var permlyURL = "http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=get_user&key="+apikey + "&version=1.0";
+			var permlyURL = "http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=get_user&key=1&version=1.0";
 
-			var postData = {"data":''};	
+			var postData = {"data":'',"api_key":apikey};	
 			var json = JSON.stringify(postData);
 
 			var request = new XMLHttpRequest();

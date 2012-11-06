@@ -1,3 +1,5 @@
+function escapeHTML(str) str.replace(/[&"<>]/g, function (m) ({ "&": "&amp;", '"': "&quot", "<": "&lt;", ">": "&gt;" })[m]);
+
 var PermalinksURL = {
 
 	__apikey: "",
@@ -45,13 +47,10 @@ var PermalinksURL = {
 	},
 	
 	getLinkDetail: function( url, node, div ){
-		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=get_link_by_target';
+		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&key=1&version=1.0&action=get_link_by_target';
 			
-		permlyURL = permlyURL + "&key=" + PermalinksURL.__apikey;
-		permlyURL = permlyURL + "&version=1.0";
-
 		var data = {"target": encodeURIComponent(url)};
-		var postData = {"data":data};	
+		var postData = {"data":data,"api_key":PermalinksURL.__apikey};	
 		var json = JSON.stringify(postData);
 
 		var request = new XMLHttpRequest();
@@ -64,16 +63,13 @@ var PermalinksURL = {
 	},
 	
 	getLinkInfo: function( url, node, div ){
-		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=get_link_by_urlkey';
+		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&key=1&version=1.0&action=get_link_by_urlkey';
 			
-		permlyURL = permlyURL + "&key=" + PermalinksURL.__apikey;
-		permlyURL = permlyURL + "&version=1.0";
-
 		var pathArray = url.split( '/' );
 		var url_key = pathArray[pathArray.length-1];
 
 		var data = {"url_key": encodeURIComponent(url_key)};
-		var postData = {"data":data};	
+		var postData = {"data":data,"api_key":PermalinksURL.__apikey};	
 		var json = JSON.stringify(postData);
 
 		var request = new XMLHttpRequest();
@@ -86,12 +82,10 @@ var PermalinksURL = {
 	},
 
 	checkLinkPresent: function( url,callback,node){
-		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=get_link_by_target';
-		permlyURL = permlyURL + "&key=" + PermalinksURL.__apikey;
-		permlyURL = permlyURL + "&version=1.0";
+		var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&key=1&version=1.0&action=get_link_by_target';
 
 		var data = {"target": encodeURIComponent(url)};
-		var postData = {"data":data};	
+		var postData = {"data":data,"api_key":PermalinksURL.__apikey};	
 		var json = JSON.stringify(postData);
 
 		var request = new XMLHttpRequest();
@@ -110,13 +104,10 @@ var PermalinksURL = {
 			{
 				PermalinksURL.fetchPrefs();
 
-				var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&action=save_link';
-
-				permlyURL = permlyURL + "&key=" + PermalinksURL.__apikey;
-				permlyURL = permlyURL + "&version=1.0";
+				var permlyURL = 'http://api.permly.com/?remote_service=rs_external_api&interface=eai_permly&key=1&version=1.0&action=save_link';
 
 				var data = {"target": window.encodeURIComponent(url)};
-				var postData = {"data":data};	
+				var postData = {"data":data,"api_key":PermalinksURL.__apikey};	
 				var json = JSON.stringify(postData);
 
 				var request = new XMLHttpRequest();
@@ -145,41 +136,41 @@ var PermalinksURL = {
 						if( url.indexOf( "perm.ly" ) != -1){
 							var shortUrl = url
 							if(result.data[i].target){
-								div.childNodes[1].innerHTML = "perm.ly URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";					
+								div.childNodes[1].innerHTML = 'perm.ly URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(shortUrl) + '" target="_blank">' + escapeHTML(shortUrl) + '</a>';					
 								
 								if(result.data[i].target == "")
-									div.childNodes[2].innerHTML = "Target URL : N/A";
+									div.childNodes[2].innerHTML = 'Target URL : N/A';
 								else	
-									div.childNodes[2].innerHTML = "Target URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + result.data[i].target + "' target='_blank'>" + result.data[i].target + "</a>";						
+									div.childNodes[2].innerHTML = 'Target URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(result.data[i].target) + '" target="_blank">' + escapeHTML(result.data[i].target) + '</a>';
 
 								if(result.data[i].count)
-									div.childNodes[3].innerHTML = "Click Count : " + result.data[i].count;
+									div.childNodes[3].innerHTML = 'Click Count : ' + escapeHTML(result.data[i].count);
 							}
 
 							PermalinksURL.copyToClipboard(shortUrl);
 						}else{
-							var shortUrl = 'http://perm.ly/'+result.data[i].url_key;
-							div.childNodes[1].innerHTML = "perm.ly URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";					
-							div.childNodes[3].innerHTML = "Click Count : " + result.data[i].count;
+							var shortUrl = "http://perm.ly/"+result.data[i].url_key;
+							div.childNodes[1].innerHTML = 'perm.ly URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(shortUrl) + '" target="_blank">' + escapeHTML(shortUrl) + '</a>';					
+							div.childNodes[3].innerHTML = 'Click Count : ' + escapeHTML(result.data[i].count);
 							PermalinksURL.copyToClipboard(shortUrl);
 						}											
 					}
 				}else{
 						if( url.indexOf( "perm.ly" ) != -1){
-							var shortUrl = url								
-							div.childNodes[1].innerHTML = "perm.ly URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";					
+							var shortUrl = url							
+							div.childNodes[1].innerHTML = 'perm.ly URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(shortUrl) + '" target="_blank">' + escapeHTML(shortUrl) + '</a>';
 							if(result.data.target == "")
-								div.childNodes[2].innerHTML = "Target URL : N/A";
+								div.childNodes[2].innerHTML = 'Target URL : N/A';
 							else
-								div.childNodes[2].innerHTML = "Target URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + result.data.target + "' target='_blank'>" + result.data.target + "</a>";
+								div.childNodes[2].innerHTML = 'Target URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(result.data.target) + '" target="_blank">' + escapeHTML(result.data.target) + '</a>';
 
 							if(result.data.count)
-								div.childNodes[3].innerHTML = "Click Count : " + result.data.count;
+								div.childNodes[3].innerHTML = 'Click Count : ' + escapeHTML(result.data.count);
 							
 						}else{
-							var shortUrl = 'http://perm.ly/'+result.data.url_key;
-							div.childNodes[1].innerHTML = "perm.ly URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + shortUrl + "' target='_blank'>" + shortUrl + "</a>";					
-							div.childNodes[3].innerHTML = "Click Count : " + result.data.count;
+							var shortUrl = "http://perm.ly/"+result.data.url_key;
+							div.childNodes[1].innerHTML = 'perm.ly URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(shortUrl) + '" target="_blank">' + escapeHTML(shortUrl) + '</a>';					
+							div.childNodes[3].innerHTML = 'Click Count : ' + escapeHTML(result.data.count);
 							
 						}											
 				}
@@ -205,7 +196,7 @@ var PermalinksURL = {
         
 	    	var doc = content.document;
 		var div = doc.createElement("div");
-		div.setAttribute("style","float:bottom;position: relative;top: 1px; left: 1px;min-height: 5em;width: 25em;padding:5px;border: 1px solid #000000; background: none repeat scroll 0 0 #dddddd;z-index:1000;opacity:1.0;");
+		div.setAttribute("style","float:bottom;position: relative;top: 1px; left: 1px;min-height: 5em;width: 25em;padding:5px;border: 1px solid #000000; background: none repeat scroll 0 0 #dddddd;z-index:100000;opacity:1.0;");
 		div.setAttribute("id", "permly-info-div" );
 		var scriptElement = doc.createElement('script');
 		
@@ -214,15 +205,15 @@ var PermalinksURL = {
 		scrpt1 = document.createTextNode("setTimeout('document.getElementById(\"permly-info-div\").parentNode.removeChild( document.getElementById(\"permly-info-div\") )'," + PermalinksURL.__refresh_timeout + ");");
 		scriptElement.appendChild( scrpt1 );
         
-		div.innerHTML += "<p style='font-weight:bold;font-family:Arial;font-size:14px;color:#000000;margin:2px;padding:0;'>Perm.ly Link Info</p>";
-		div.innerHTML += "<p id='permly-info-div-title' style='font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;'>Loading.......</p>";
+		div.innerHTML += '<p style="font-weight:bold;font-family:Arial;font-size:14px;color:#000000;margin:2px;padding:0;">Perm.ly Link Info</p>';
+		div.innerHTML += '<p id="permly-info-div-title" style="font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;">Loading.......</p>';
 		
 		if( url.indexOf( "perm.ly" ) != -1)
-			div.innerHTML += "<p id='permly-info-div-url' style='font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;'>&nbsp;</p>";
+			div.innerHTML += '<p id="permly-info-div-url" style="font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;">&nbsp;</p>';
 		else
-			div.innerHTML += "<p id='permly-info-div-url' style='font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;'>Target URL : <a style='color:#4f4f4f;font-size:12px;font-weight:normal' href='" + url + "' target='_blank'>" + url + "</a></p>";
+			div.innerHTML += '<p id="permly-info-div-url" style="font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;">Target URL : <a style="color:#4f4f4f;font-size:12px;font-weight:normal" href="' + escapeHTML(url) + '" target="_blank">' + escapeHTML(url) + '</a></p>';
 		
-		div.innerHTML += "<p id='permly-info-div-click' style='font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;'>&nbsp;</p>";
+		div.innerHTML += '<p id="permly-info-div-click" style="font-weight:bold;font-style:normal;font-family:Arial;font-size:12px;color:#4f4f4f;margin:2px;padding:0;background: none repeat scroll 0 0 #dddddd;">&nbsp;</p>';
 		
 		div.appendChild( scriptElement );
 		node.parentNode.insertBefore( div, node.nextSibling );
